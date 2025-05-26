@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Performance_Tests
-{
+{// Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     public class BirthMonthTests
     {
         private int[] monthData;
-
+        // Alustetaan testidata, 60 % kesäkuu ja loput satunnaisesti muista kuukausista
         [GlobalSetup]
         public void Setup()
         {
@@ -27,10 +27,10 @@ namespace Performance_Tests
                 if (selection < 0.60)
                     monthData[i] = 6;
                 else
-                    monthData[i] = rand.Next(1, 13);
+                    monthData[i] = rand.Next(1, 13); 
             }
         }
-
+        // Benchmark-metodi: If-else-rakenne, jossa yleisin ehto (kesäkuu) on ensimmäisenä
         [Benchmark]
         public void IfCommonFirst()
         {
@@ -39,7 +39,7 @@ namespace Performance_Tests
                 GetMonthName_CommonFirst(month);
             }
         }
-
+        //Benchmark-metodi: If-else-rakenne, jossa yleisin ehto (kesäkuu) on keskellä
         [Benchmark]
         public void IfCommonMiddle()
         {
@@ -48,7 +48,7 @@ namespace Performance_Tests
                 GetMonthName_CommonMiddle(month);
             }
         }
-
+        //Benchmark-metodi: If-else-rakenne, jossa yleisin ehto (kesäkuu) on viimeisenä
         [Benchmark]
         public void IfCommonLast()
         {
@@ -57,7 +57,7 @@ namespace Performance_Tests
                 GetMonthName_CommonLast(month);
             }
         }
-
+        //Benchmark-metodi: Switch-case-rakenne, jossa yleisin ehto (kesäkuu) on ensimmäisenä
         [Benchmark]
         public void SwitchCommonFirst()
         {
@@ -66,7 +66,7 @@ namespace Performance_Tests
                 GetMonthName_SwitchFirst(month);
             }
         }
-
+        //Benchmark-metodi: Switch-case-rakenne, jossa yleisin ehto (kesäkuu) on keskellä
         [Benchmark]
         public void SwitchCommonMiddle()
         {
@@ -75,7 +75,7 @@ namespace Performance_Tests
                 GetMonthName_SwitchMiddle(month);
             }
         }
-
+        //Benchmark-metodi: Switch-case-rakenne, jossa yleisin ehto (kesäkuu) on viimeisenä
         [Benchmark]
         public void SwitchCommonLast()
         {
@@ -84,7 +84,7 @@ namespace Performance_Tests
                 GetMonthName_SwitchLast(month);
             }
         }
-
+        // If-else-rakenne, joka palauttaa kuukauden nimen, kesäkuu ensimmäisenä
         private string GetMonthName_CommonFirst(int month)
         {
             if (month == 6) return "Kesäkuu";
@@ -101,7 +101,7 @@ namespace Performance_Tests
             else if (month == 12) return "Joulukuu";
             else return "Tuntematon";
         }
-
+        // If-else-rakenne, joka palauttaa kuukauden nimen, kesäkuu keskellä
         private string GetMonthName_CommonMiddle(int month)
         {
             if (month == 1) return "Tammikuu";
@@ -118,7 +118,7 @@ namespace Performance_Tests
             else if (month == 12) return "Joulukuu";
             else return "Tuntematon";
         }
-
+        // If-else-rakenne, joka palauttaa kuukauden nimen, kesäkuu viimeisenä
         private string GetMonthName_CommonLast(int month)
         {
             if (month == 1) return "Tammikuu";
@@ -135,7 +135,7 @@ namespace Performance_Tests
             else if (month == 6) return "Kesäkuu";
             else return "Tuntematon";
         }
-
+        // Switch-case-rakenne, joka palauttaa kuukauden nimen, kesäkuu ensimmäisenä
         private string GetMonthName_SwitchFirst(int month)
         {
             switch (month)
@@ -155,7 +155,7 @@ namespace Performance_Tests
                 default: return "Tuntematon";
             }
         }
-
+        // Switch-case-rakenne, joka palauttaa kuukauden nimen, kesäkuu keskellä
         private string GetMonthName_SwitchMiddle(int month)
         {
             switch (month)
@@ -175,7 +175,7 @@ namespace Performance_Tests
                 default: return "Tuntematon";
             }
         }
-
+        // Switch-case-rakenne, joka palauttaa kuukauden nimen, kesäkuu viimeisenä
         private string GetMonthName_SwitchLast(int month)
         {
             switch (month)

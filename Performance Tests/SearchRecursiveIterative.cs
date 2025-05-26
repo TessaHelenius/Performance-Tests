@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Performance_Tests
 {
-
+    // Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     public class SearchRecursiveIterative
     {
         private BinarySearchTree bst;
         private int searchValue;
-
+        // Alustetaan testidata ennen testien ajoa
         [GlobalSetup]
         public void Setup()
         {
@@ -24,12 +24,12 @@ namespace Performance_Tests
 
             foreach (var value in values)
             {
-                bst.Insert(value);
+                bst.Insert(value); // Lisätään arvot puuhun
             }
 
-            searchValue = 199999;
+            searchValue = 199999; // Etsittävä arvo
         }
-
+        // Suorittaa rekursiivisen haun 10 000 kertaa
         [Benchmark(OperationsPerInvoke = 10000)]
         public bool RecursiveSearch()
         {
@@ -40,7 +40,7 @@ namespace Performance_Tests
             }
             return result;
         }
-
+        // Suorittaa iteratiivisen haun 10 000 kertaa
         [Benchmark(OperationsPerInvoke = 10000)]
         public bool IterativeSearch()
         {
@@ -52,7 +52,7 @@ namespace Performance_Tests
             return result;
         }
     }
-
+    // Binäärisen hakupuun solmu
     public class Node
     {
         public int Value;
@@ -61,7 +61,7 @@ namespace Performance_Tests
 
         public Node(int value) => Value = value;
     }
-
+    // Binäärinen hakupuu
     public class BinarySearchTree
     {
         public Node Root;
@@ -70,7 +70,7 @@ namespace Performance_Tests
         {
             Root = Insert(Root, value);
         }
-
+        // Rekursiivinen lisäys
         private Node Insert(Node node, int value)
         {
             if (node == null) return new Node(value);
@@ -78,7 +78,7 @@ namespace Performance_Tests
             else node.Right = Insert(node.Right, value);
             return node;
         }
-
+        // Hakee arvon puusta rekursiivisesti
         public bool SearchRecursive(Node node, int value)
         {
             if (node == null) return false;
@@ -87,7 +87,7 @@ namespace Performance_Tests
                 ? SearchRecursive(node.Left, value)
                 : SearchRecursive(node.Right, value);
         }
-
+        // Hakee arvon puusta iteratiivisesti (silmukalla)
         public bool SearchIterative(int value)
         {
             var current = Root;

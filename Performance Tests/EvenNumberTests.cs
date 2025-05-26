@@ -7,13 +7,13 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Performance_Tests
-{
+{ // Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     public class EvenNumberTests
     {
         private List<int> list;
-
+        // Alustetaan testidata
         [GlobalSetup]
         public void Setup()
         {
@@ -24,7 +24,7 @@ namespace Performance_Tests
                 list.Add(i);
             }
         }
-
+        // Hakee parillisten lukujen määrän listasta for-silmukalla
         [Benchmark]
         public int CountWithFor()
         {
@@ -38,7 +38,7 @@ namespace Performance_Tests
             }
             return count;
         }
-
+        // Hakee parillisten lukujen määrän listasta foreach-silmukalla
         [Benchmark]
         public int CountWithForeach()
         {
@@ -52,7 +52,7 @@ namespace Performance_Tests
             }
             return count;
         }
-
+        // Hakee parillisten lukujen määrän listasta while-silmukalla
         [Benchmark]
         public int CountWithWhile()
         {
@@ -68,6 +68,7 @@ namespace Performance_Tests
             }
             return count;
         }
+        // Hakee parillisten lukujen määrän listasta do-while-silmukalla
         [Benchmark]
         public int CountWithDoWhile()
         {
@@ -85,6 +86,8 @@ namespace Performance_Tests
 
             return count;
         }
+
+        // Hakee parillisten lukujen määrän listasta LINQ:n avulla
         [Benchmark]
         public int CountWithLinq()
         {

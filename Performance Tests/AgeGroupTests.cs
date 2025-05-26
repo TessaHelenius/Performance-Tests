@@ -6,13 +6,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Performance_Tests
-{
+{// Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
     public class AgeGroupTests
     {
         private int[] ageData;
 
+        //Alustetaan testidata eri ikäryhmien perusteella satunnaisesti
         [GlobalSetup]
         public void Setup()
         {
@@ -24,16 +25,16 @@ namespace Performance_Tests
                 double selectionValue = rand.NextDouble();
 
                 if (selectionValue < 0.6)
-                    ageData[i] = rand.Next(20, 65);
+                    ageData[i] = rand.Next(20, 65); // Aikuiset (60%)
                 else if (selectionValue < 0.75)
-                    ageData[i] = rand.Next(13, 20);
+                    ageData[i] = rand.Next(13, 20); // Nuoret (15%)
                 else if (selectionValue < 0.9)
-                    ageData[i] = rand.Next(0, 13);
+                    ageData[i] = rand.Next(0, 13); // Lapset (15%)
                 else
-                    ageData[i] = rand.Next(65, 100);
+                    ageData[i] = rand.Next(65, 100); // Seniorit (10%)
             }
         }
-
+        // Benchmark-metodi:If-else-rakenne jossa yleisin ehto on ensimmäisenä
         [Benchmark]
         public void IfAdultFirst()
         {
@@ -42,6 +43,7 @@ namespace Performance_Tests
                 AdultFirstIfElse(age);
             }
         }
+        // Benchmark-metodi: If-else-rakenne, jossa yleisin ehto on viimeisenä
         [Benchmark]
         public void IfAdultLast()
         {
@@ -50,6 +52,7 @@ namespace Performance_Tests
                 AdultLastIfElse(age);
             }
         }
+        // Ikäryhmän tarkistus if-else-rakenteella, aikuiset ensimmäisenä
         private static string AdultFirstIfElse(int age)
         {
             if (age >= 20 && age <= 64)
@@ -63,6 +66,7 @@ namespace Performance_Tests
             else
                 return "Tuntematon";
         }
+        // Ikäryhmän tarkistus if-else-rakenteella, aikuiset viimeisenä
         private static string AdultLastIfElse(int age)
         {
             if (age >= 0 && age <= 12)
@@ -76,6 +80,8 @@ namespace Performance_Tests
             else
                 return "Tuntematon";
         }
+
+        // Benchmark-metodi: Switch-case-rakenne jossa yleisin ehto on ensimmäisenä
         [Benchmark]
         public void SwitchAdultFirst()
         {
@@ -84,7 +90,7 @@ namespace Performance_Tests
                 MostCommonFirstSwitch(age);
             }
         }
-
+        // Benchmark-metodi: Switch-case-rakenne jossa yleisin ehto on viimeisenä
         [Benchmark]
         public void SwitchAdultLast()
         {
@@ -94,6 +100,7 @@ namespace Performance_Tests
             }
         }
 
+        // Ikäryhmän tarkistus switch-case-rakenteella, aikuiset ensimmäisenä
         public string MostCommonFirstSwitch(int age)
         {
             int group = GetGroup(age);
@@ -107,7 +114,7 @@ namespace Performance_Tests
                 default: return "Tuntematon";
             }
         }
-
+        // Ikäryhmän tarkistus switch-case-rakenteella, aikuiset viimeisenä
         public string MostCommonLastSwitch(int age)
         {
             int group = GetGroup(age);
@@ -121,7 +128,7 @@ namespace Performance_Tests
                 default: return "Tuntematon";
             }
         }
-
+        // Palauttaa ikäryhmän numerona annetun iän perusteella 0 = Lapsi, 1 = Nuori, 2 = Aikuinen, 3 = Seniori, 4 = Tuntematon
         public int GetGroup(int age)
         {
             if (age >= 0 && age <= 12) return 0;

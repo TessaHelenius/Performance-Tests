@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Performance_Tests
 {
-
+    // Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     public class DictionaryTests
     {
         private Dictionary<int, int> baseDictionary;
-
+        // Alustetaan testidata
         [GlobalSetup]
         public void Setup()
         {
@@ -25,13 +25,13 @@ namespace Performance_Tests
                 baseDictionary.Add(i, i);
             }
         }
-
+        // Hakee viimeisen arvon sanakirjasta
         [Benchmark]
         public bool Search()
         {
             return baseDictionary.ContainsKey(baseDictionary.Count - 1);
         }
-
+        // Lisää uuden arvon sanakirjaan
         [Benchmark]
         public Dictionary<int, int> Add()
         {
@@ -39,7 +39,7 @@ namespace Performance_Tests
             dict.Add(dict.Count, dict.Count);
             return dict;
         }
-
+        // Poistaa arvon sanakirjan alusta
         [Benchmark]
         public Dictionary<int, int> DeleteFromStart()
         {
@@ -47,7 +47,7 @@ namespace Performance_Tests
             dict.Remove(10);
             return dict;
         }
-
+        // Poistaa arvon sanakirjan keskeltä
         [Benchmark]
         public Dictionary<int, int> DeleteFromMiddle()
         {
@@ -55,7 +55,7 @@ namespace Performance_Tests
             dict.Remove(500000);
             return dict;
         }
-
+        // Poistaa arvon sanakirjan lopusta
         [Benchmark]
         public Dictionary<int, int> DeleteFromEnd()
         {

@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Performance_Tests
-{
+{//Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
     public class SumTests
     {
         private List<int> list;
         private long sumResult;
-
+        // Alustetaan testidata
         [GlobalSetup]
         public void Setup()
         {
@@ -25,7 +25,7 @@ namespace Performance_Tests
                 list.Add(i);
             }
         }
-
+        // Laskee listan kaikki arvot yhteen for-silmukalla
         [Benchmark]
         public long SumWithFor()
         {
@@ -36,7 +36,7 @@ namespace Performance_Tests
             }
             return sum;
         }
-
+        // Laskee listan kaikki arvot yhteen foreach-silmukalla
         [Benchmark]
         public long SumWithForeach()
         {
@@ -47,7 +47,7 @@ namespace Performance_Tests
             }
             return sum;
         }
-
+        // Laskee listan kaikki arvot yhteen while-silmukalla
         [Benchmark]
         public long SumWithWhile()
         {
@@ -60,7 +60,7 @@ namespace Performance_Tests
             }
             return sum;
         }
-
+        // Laskee listan kaikki arvot yhteen do-while-silmukalla
         [Benchmark]
         public long SumWithDoWhile()
         {
@@ -76,7 +76,7 @@ namespace Performance_Tests
             }
             return sum;
         }
-
+        // Laskee listan kaikki arvot yhteen LINQ:n avulla
         [Benchmark]
         public long SumWithLinq()
         {

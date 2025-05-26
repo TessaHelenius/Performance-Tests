@@ -7,14 +7,14 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Performance_Tests
-{
+{// Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(SummaryOrderPolicy.FastestToSlowest)]
    // [DisassemblyDiagnoser(printSource: true, printInstructionAddresses: true)] // 
     public class MaxValueTests
     {
         private List<int> list;
-
+        // Alustetaan testidata
         [GlobalSetup]
         public void Setup()
         {
@@ -25,7 +25,7 @@ namespace Performance_Tests
                 list.Add(i);
             }
         }
-
+        // Hakee suurimman arvon listasta for-silmukalla
         [Benchmark]
         public int MaxWithFor()
         {
@@ -37,7 +37,7 @@ namespace Performance_Tests
             }
             return max;
         }
-
+        // Hakee suurimman arvon listasta foreach-silmukalla
         [Benchmark]
         public int MaxWithForeach()
         {
@@ -49,7 +49,7 @@ namespace Performance_Tests
             }
             return max;
         }
-
+        // Hakee suurimman arvon listasta while-silmukalla
         [Benchmark]
         public int MaxWithWhile()
         {
@@ -63,7 +63,7 @@ namespace Performance_Tests
             }
             return max;
         }
-
+        // Hakee suurimman arvon listasta do-while-silmukalla
         [Benchmark]
         public int MaxWithDoWhile()
         {
@@ -80,7 +80,7 @@ namespace Performance_Tests
             }
             return max;
         }
-
+        // Hakee suurimman arvon listasta LINQ:n avulla
         [Benchmark]
         public int MaxWithLinq()
         {

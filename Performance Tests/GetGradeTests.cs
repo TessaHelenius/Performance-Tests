@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Performance_Tests
 {
-
+    // Benchmarkdotnetin avulla suorituskykymittaus
     [MemoryDiagnoser]
     [Orderer(BenchmarkDotNet.Order.SummaryOrderPolicy.FastestToSlowest)]
     public class GetGradeTests
     {
         private int[] scores;
-
+        // Alustetaan testidata, satunnaisia arvosanoja välillä 0-100
         [GlobalSetup]
         public void Setup()
         {
@@ -24,6 +24,7 @@ namespace Performance_Tests
                 scores[i] = rand.Next(0, 101);
             }
         }
+        // Benchmark-metodit eri arvosanan saamiseksi
         [Benchmark]
         public void IfElse()
         {
@@ -50,7 +51,7 @@ namespace Performance_Tests
                 GetGradeRecursive(score);
             }
         }
-
+        // Arvosanan hakeminen if-else-rakenteella
         public string GetGradeIfElse(int score)
         {
             if (score >= 90) return "A";
@@ -59,6 +60,7 @@ namespace Performance_Tests
             else if (score >= 60) return "D";
             else return "F";
         }
+        // Arvosanan hakeminen switch-case-rakenteella
         public string GetGradeSwitch(int score)
         {
             switch (score)
@@ -75,11 +77,13 @@ namespace Performance_Tests
                     return "F";
             }
         }
+        // Arvosanan hakeminen rekursiivisesti
         public string GetGradeRecursive(int score)
         {
             return GetGradeRecursiveHelperMethod(score, 90);
         }
 
+        // Rekursiivinen apumetodi arvosanan hakemiseen
         public string GetGradeRecursiveHelperMethod(int score, int currentLimit)
         {
             if (currentLimit < 60)
